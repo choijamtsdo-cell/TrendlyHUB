@@ -1,4 +1,3 @@
-<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#faf9f5;color:#141413}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
 <title>TrendlyHUB</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Onest:wght@500;600;700&family=Golos+Text:wght@400;500;600;700&display=swap">
@@ -624,8 +623,39 @@ body.editing [data-t]{outline:1.5px dashed color-mix(in srgb,var(--accent) 70%,t
 body.editing [data-t]:hover{background:color-mix(in srgb,var(--accent) 12%,transparent)}
 body.editing [data-t]:focus{outline:2px solid var(--accent);background:color-mix(in srgb,var(--accent) 10%,transparent)}
 
+/* ---- motion ---- */
+[hidden]{display:none!important}
+html{scroll-behavior:smooth}
+:root{--ease:cubic-bezier(.22,.8,.24,1)}
+@keyframes viewIn{from{opacity:0;transform:translateY(12px)}}
+@keyframes fadeIn{from{opacity:0}}
+@keyframes popIn{from{opacity:0;transform:translateY(16px) scale(.97)}}
+@keyframes slideIn{from{transform:translateX(100%)}}
+@keyframes dropIn{from{opacity:0;transform:translateY(-6px) scale(.98)}}
+@keyframes toastIn{from{opacity:0;transform:translateY(14px)}}
+#app.vin{animation:viewIn .5s var(--ease)}
+.rv{opacity:0;transform:translateY(22px);transition:opacity .7s var(--ease),transform .7s var(--ease)!important;transition-delay:var(--d,0ms)!important}
+.rv.in{opacity:1;transform:none}
+.modal:not([hidden]){animation:fadeIn .22s ease-out}
+.modal:not([hidden]) .mbox{animation:popIn .34s var(--ease)}
+.modal.out{opacity:0;transition:opacity .18s ease-in}
+.modal.out .mbox{transform:translateY(10px) scale(.98);transition:transform .18s ease-in}
+.drawer:not([hidden]){animation:fadeIn .22s ease-out}
+.drawer:not([hidden]) nav{animation:slideIn .32s var(--ease)}
+.drop:not([hidden]){animation:dropIn .2s var(--ease);transform-origin:top right}
+.toast:not([hidden]){animation:toastIn .3s var(--ease)}
+.btn:active{transform:scale(.97)}
+.cat,.pkg,.pcard,.tile{will-change:auto}
+.gc .cover{overflow:hidden}
+.gc{transition:transform .25s var(--ease)}
+.gc:hover{transform:translateY(-3px)}
+.pkg{transition:transform .25s var(--ease),box-shadow .25s}
+.pkg:hover{transform:translateY(-4px);box-shadow:var(--shadow)}
+
 @media (prefers-reduced-motion:reduce){
   *,*::before{animation:none!important;transition:none!important}
+  html{scroll-behavior:auto}
+  .rv{opacity:1;transform:none}
 }
 @media (max-width:1100px){
   .cats{grid-template-columns:repeat(4,1fr)}
@@ -1490,17 +1520,17 @@ function go(v,p={}){
   if(v==="designer"&&p.tab==="gigs"&&p.edit!==ui.p.edit)ui.gImgs=null;
   if(v==="join"&&ui.v!=="join")ui.jImgs=[];
   ui.cancelArm=null;ui.brandEdit=ui.v===v&&ui.p.tab===p.tab?ui.brandEdit:false;
-  ui.v=v;ui.p=p;closeDrops();closeDrawer();render();window.scrollTo?.({top:0});
+  ui.v=v;ui.p=p;closeDrops();closeDrawer();window.scrollTo?.({top:0,behavior:"instant"});render();fx();
   try{sessionStorage.setItem("th-view",JSON.stringify({v,p}))}catch(e){}
 }
 function render(keepScroll){const y=window.scrollY;renderHeader();const f=V[ui.v]||V.home;$("#app").innerHTML=f(ui.p);applyEdit();
-  if(keepScroll)window.scrollTo?.(0,y);const ch=$("#chat");if(ch)ch.scrollTop=ch.scrollHeight;renderTour()}
+  if(keepScroll)window.scrollTo?.({top:y,behavior:"instant"});const ch=$("#chat");if(ch)ch.scrollTop=ch.scrollHeight;renderTour()}
 const commit=(keep=true)=>{save();render(keep)};
 
 /* ================= modal ================= */
 let qrTimer=null;
-function openModal(html,wide){const m=$("#modal"),b=$("#mbox");b.className="mbox"+(wide?" wide":"");b.innerHTML=`<button class="mclose" type="button" data-act="mclose" aria-label="Хаах">×</button>`+html;m.hidden=false;b.querySelector("button:not(.mclose),input")?.focus?.()}
-function closeModal(){$("#modal").hidden=true;clearInterval(qrTimer);qrTimer=null;if(ui.payDone){ui.payDone=false;render(true)}}
+function openModal(html,wide){const m=$("#modal"),b=$("#mbox");clearTimeout(mOut);m.classList.remove("out");b.className="mbox"+(wide?" wide":"");b.innerHTML=`<button class="mclose" type="button" data-act="mclose" aria-label="Хаах">×</button>`+html;m.hidden=false;b.querySelector("button:not(.mclose),input")?.focus?.()}
+let mOut;function closeModal(){const m=$("#modal");if(!m.hidden&&!RM()){m.classList.add("out");clearTimeout(mOut);mOut=setTimeout(()=>{m.hidden=true;m.classList.remove("out")},180)}else m.hidden=true;clearInterval(qrTimer);qrTimer=null;if(ui.payDone){ui.payDone=false;render(true)}}
 function qrSvg(text){if(typeof qrcode!=="function")return `<div class="qrfail">QR код ачаалагдсангүй.<br><b>${esc(text)}</b></div>`;
   try{const q=qrcode(0,"M");q.addData(text);q.make();const n=q.getModuleCount();let p="";for(let r=0;r<n;r++)for(let c=0;c<n;c++)if(q.isDark(r,c))p+=`M${c} ${r}h1v1h-1z`;
     return `<svg viewBox="-2 -2 ${n+4} ${n+4}" role="img" aria-label="Төлбөрийн QR код" shape-rendering="crispEdges"><rect x="-2" y="-2" width="${n+4}" height="${n+4}" fill="#fff"/><path d="${p}" fill="#17142B"/></svg>`}catch(e){return `<div class="qrfail">${esc(text)}</div>`}}
@@ -1776,10 +1806,11 @@ async function initEdit(){if(!window.claude?.use)return;const [a,u]=await Promis
 load();
 try{const s=JSON.parse(sessionStorage.getItem("th-view")||"null");if(s&&V[s.v]&&!["login","checkout"].includes(s.v)){ui.v=s.v;ui.p=s.p||{}}}catch(e){}
 if(["client","designer","admin"].includes(ui.v)&&role()!==ui.v)ui={v:"home",p:{}};
-render();
-Promise.race([loadTexts(),new Promise(r=>setTimeout(r,1500))]).then(()=>{if(Object.keys(TXT).length){applyCats();render(true)}});
+render();$("#app").style.opacity="0";
+let fontsP=null;
+Promise.race([Promise.all([loadTexts(),new Promise(r=>{fontsP=r})]),new Promise(r=>setTimeout(r,1200))]).then(()=>{if(Object.keys(TXT).length)applyCats();render(true);$("#app").style.opacity="";fx()});
 initEdit();
-const fontsDone=()=>{if(fontsReady)return;fontsReady=true;for(const k in ART)delete ART[k];render(true)};
+const fontsDone=()=>{if(fontsReady)return;fontsReady=true;for(const k in ART)delete ART[k];if(fontsP){fontsP();fontsP=null;if($("#app").style.opacity!=="0")render(true)}else render(true)};
 if(document.fonts?.ready){Promise.race([document.fonts.load('700 30px "Onest"').then(()=>document.fonts.ready),new Promise(r=>setTimeout(r,2500))]).then(fontsDone)}else fontsDone();
 setInterval(()=>{if(["order","designer","admin","client"].includes(ui.v)&&$("#modal").hidden&&!document.activeElement?.matches?.("input,textarea,select"))render(true)},60000);
 
@@ -1788,6 +1819,19 @@ let smsT;function sms(t){let el=$("#sms");if(!el){el=document.createElement("div
   el.innerHTML=`<span class="smsapp">Мессеж · одоо</span><b>TrendlyHUB</b><span>${esc(t.replace(/^TrendlyHUB: /,""))}</span>`;el.hidden=false;el.classList.remove("in");void el.offsetWidth;el.classList.add("in");clearTimeout(smsT);smsT=setTimeout(()=>el.hidden=true,9000)}
 addEventListener("scroll",()=>document.body.classList.toggle("scrolled",scrollY>360),{passive:true});
 let slideI=0;setInterval(()=>{if(ui.v!=="home"||document.hidden||matchMedia("(prefers-reduced-motion: reduce)").matches)return;const sl=$$(".h2show .slide");if(sl.length<2)return;sl[slideI%sl.length].classList.remove("on");slideI++;sl[slideI%sl.length].classList.add("on")},6000);
-</script>
 
-</body></html>
+/* ================= motion ================= */
+function RM(){return !!window.matchMedia?.("(prefers-reduced-motion: reduce)").matches}
+const FX_SEL="h1,.lead,.sec-h,.card,.tile,.gc,.cat,.pkg,.car,.mitem,.callout,.ggrid>*,.tiles>*";
+let fxIO=null;
+function fx(){const app=$("#app");if(!app||EDIT||RM())return;
+  app.classList.remove("vin");void app.offsetWidth;app.classList.add("vin");
+  if(!("IntersectionObserver" in window))return;
+  fxIO?.disconnect();
+  const els=[...app.querySelectorAll(FX_SEL)].filter(el=>el.getClientRects().length&&!el.parentElement.closest(FX_SEL)&&!el.closest(".modal,.drawer,.drop")).slice(0,120);
+  els.forEach(el=>el.classList.add("rv"));
+  fxIO=new IntersectionObserver(ents=>{let i=0;ents.filter(e=>e.isIntersecting).sort((a,b)=>a.boundingClientRect.top-b.boundingClientRect.top||a.boundingClientRect.left-b.boundingClientRect.left).forEach(e=>{const el=e.target;fxIO.unobserve(el);
+    el.style.setProperty("--d",Math.min(i++,6)*70+"ms");requestAnimationFrame(()=>el.classList.add("in"));
+    setTimeout(()=>{el.classList.remove("rv","in");el.style.removeProperty("--d")},1300)})},{rootMargin:"0px 0px -8% 0px",threshold:.08});
+  els.filter(el=>el.classList.contains("rv")).forEach(el=>fxIO.observe(el))}
+</script>
