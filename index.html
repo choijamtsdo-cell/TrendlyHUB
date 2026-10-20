@@ -715,6 +715,58 @@ html{scroll-behavior:smooth}
 .aioff{text-align:center;display:flex;flex-direction:column;align-items:center;gap:8px;padding:36px 18px!important}
 @media (max-width:760px){.aipals{grid-template-columns:minmax(0,1fr)}.aigrid,.aicols{grid-template-columns:minmax(0,1fr)}.aifab span{display:none}.aifab{padding:14px}}
 
+/* ---- AI popup ---- */
+.aifab-x{display:none}
+body.aipop-on .aifab{padding:14px}
+body.aipop-on .aifab b,body.aipop-on .aifab span{display:none}
+body.aipop-on .aifab-x{display:block}
+.aifab:not([hidden]){animation:fabIn .5s var(--ease)}
+@keyframes fabIn{from{opacity:0;transform:translateY(16px) scale(.8)}}
+.aifab::after{content:"";position:absolute;inset:0;border-radius:inherit;box-shadow:0 0 0 0 rgba(176,75,255,.55);animation:fabPulse 2.6s 1.2s 3}
+@keyframes fabPulse{0%{box-shadow:0 0 0 0 rgba(176,75,255,.5)}80%,100%{box-shadow:0 0 0 16px rgba(176,75,255,0)}}
+.aipop{position:fixed;right:18px;bottom:calc(84px + env(safe-area-inset-bottom,0px));z-index:46;width:min(390px,calc(100vw - 36px));height:min(600px,calc(100vh - 120px));display:flex;flex-direction:column;background:var(--surface);border:1px solid var(--line);border-radius:20px;box-shadow:0 30px 70px -24px rgba(23,20,43,.55),0 8px 20px -10px rgba(23,20,43,.25);overflow:hidden;transform-origin:bottom right}
+.aipop:not([hidden]){animation:aipopIn .34s var(--ease)}
+@keyframes aipopIn{from{opacity:0;transform:translateY(14px) scale(.92)}}
+.aipop.out{opacity:0;transform:translateY(10px) scale(.95);transition:opacity .2s ease-in,transform .2s ease-in}
+.aipop-h{display:flex;align-items:center;gap:10px;padding:14px 10px 14px 16px;background:linear-gradient(135deg,#2A1A6E,#5B2FD6 55%,#B04BFF);color:#fff}
+.aiav.lg{width:38px;height:38px;font-size:17px;background:rgba(255,255,255,.18);box-shadow:inset 0 0 0 1px rgba(255,255,255,.3)}
+.aipop-t{flex:1;min-width:0;display:flex;flex-direction:column;line-height:1.25}
+.aipop-t b{font-family:var(--display);font-size:16px}
+.aipop-t small{font-size:12.5px;opacity:.85;display:flex;align-items:center;gap:6px}
+.aipop-t small i{width:7px;height:7px;border-radius:50%;background:#7CF0B0;box-shadow:0 0 0 3px rgba(124,240,176,.25)}
+.aipop-x{width:34px;height:34px;display:grid;place-items:center;border:0;border-radius:10px;background:transparent;color:#fff;opacity:.85}
+.aipop-x:hover{background:rgba(255,255,255,.15);opacity:1}
+.aipop-b{flex:1;min-height:0;max-height:none!important;overflow-y:auto;padding:16px 14px!important;background:var(--bg)}
+.aipop-b .msg{max-width:92%}
+.aipop-b .bub{background:var(--surface);box-shadow:0 1px 2px rgba(23,20,43,.06)}
+.aipop-b .msg.me .bub{background:var(--accent)}
+.aipop-chips{display:flex;flex-direction:column;align-items:flex-end;gap:6px;margin-top:4px}
+.aipop-chips button{border:1.5px solid var(--accent);color:var(--accent-deep);background:var(--surface);border-radius:14px 14px 4px 14px;padding:7px 12px;font-size:13.5px;font-weight:600;text-align:right;max-width:92%;transition:background .15s}
+.aipop-chips button:hover{background:var(--accent-soft)}
+.aipop-tools{display:flex;flex-wrap:wrap;gap:6px;align-items:center;margin-top:10px;padding-top:12px;border-top:1px dashed var(--line);font-size:12.5px;color:var(--muted)}
+.aipop-tools button{border:1px solid var(--line);background:var(--surface);border-radius:999px;padding:5px 10px;font-size:12.5px;font-weight:600;color:var(--ink)}
+.aipop-tools button:hover{border-color:var(--accent);color:var(--accent-deep)}
+.aipop-err{margin:0;padding:8px 14px;background:var(--bad-soft);color:var(--bad);font-size:13px}
+.aipop-f{display:flex;gap:8px;padding:10px 10px 10px 12px;border-top:1px solid var(--line);background:var(--surface)}
+.aipop-f input{flex:1;border-radius:999px;padding:10px 14px}
+.aipop-send{flex:none;width:42px;height:42px;border-radius:50%;border:0;display:grid;place-items:center;background:var(--accent);color:var(--accent-ink);transition:transform .15s}
+.aipop-send:hover{transform:scale(1.06)}
+.aipop-send.stop{background:var(--ink)}
+.aipop-send.stop i{width:12px;height:12px;border-radius:2px;background:var(--bg)}
+.aipop-note{margin:0;padding:0 12px 8px;background:var(--surface);font-size:11px;color:var(--faint);text-align:center}
+.aitease{position:fixed;right:18px;bottom:calc(84px + env(safe-area-inset-bottom,0px));z-index:45;display:flex;align-items:flex-start;gap:4px;max-width:260px;background:var(--surface);border:1px solid var(--line);border-radius:16px 16px 4px 16px;box-shadow:var(--shadow);padding:4px 4px 4px 0}
+.aitease:not([hidden]){animation:popIn .4s var(--ease)}
+.aitease-b{border:0;background:none;text-align:left;padding:8px 4px 8px 14px;font-size:14px;line-height:1.4;color:var(--ink)}
+.aitease-b b{display:block}
+.aitease-x{border:0;background:none;width:26px;height:26px;border-radius:8px;color:var(--muted);font-size:18px;line-height:1}
+.aitease-x:hover{background:var(--sunk)}
+@media (max-width:640px){
+  .aipop{right:0;left:0;bottom:0;width:100%;height:min(88vh,100dvh - 40px);border-radius:20px 20px 0 0;transform-origin:bottom center}
+  body.aipop-on .aifab{display:none}
+  .aipop-f{padding-bottom:calc(10px + env(safe-area-inset-bottom,0px))}
+  .aitease{right:12px;bottom:calc(80px + env(safe-area-inset-bottom,0px))}
+}
+
 @media (prefers-reduced-motion:reduce){
   *,*::before{animation:none!important;transition:none!important}
   html{scroll-behavior:auto}
@@ -773,7 +825,9 @@ html{scroll-behavior:smooth}
 </header>
 <div class="drawer" id="drawer" hidden></div>
 <main id="app"></main>
-<button class="aifab" id="aiFab" type="button" data-act="go" data-v="ai" hidden><b aria-hidden="true">✦</b><span>AI туслах</span></button>
+<div class="aipop" id="aiPop" role="dialog" aria-label="AI туслах" hidden></div>
+<div class="aitease" id="aiTease" hidden><button class="aitease-b" type="button" data-act="aiteaseopen"><b>Сайн байна уу!</b> Дизайны асуулт байна уу? Надаас асуугаарай.</button><button class="aitease-x" type="button" data-act="aiteasex" aria-label="Хаах">×</button></div>
+<button class="aifab" id="aiFab" type="button" data-act="aipop" aria-expanded="false" aria-controls="aiPop" hidden><b aria-hidden="true">✦</b><span>AI туслах</span><svg class="aifab-x" viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/></svg></button>
 <footer class="ft"><div class="wrap ftcols">
   <div><h4><span data-t="ft.41233e">Ангилал</span></h4><button type="button" data-act="go" data-v="search" data-cat="social"><span data-t="ft.8c031e">Нийгмийн сүлжээний зураг</span></button><button type="button" data-act="go" data-v="search" data-cat="poster"><span data-t="ft.b5771e">Зурагт хуудас, хэвлэл</span></button><button type="button" data-act="go" data-v="search" data-cat="menu"><span data-t="ft.cd140c">Цэс, үнийн жагсаалт</span></button><button type="button" data-act="go" data-v="search" data-cat="deck"><span data-t="ft.8c1b86">Танилцуулга</span></button><button type="button" data-act="go" data-v="search" data-cat="video"><span data-t="ft.2fb5e2">Богино видео</span></button><button type="button" data-act="go" data-v="search" data-cat="logo"><span data-t="ft.888de8">Лого, брэнд</span></button></div>
   <div><h4><span data-t="ft.949beb">Захиалагчид</span></h4><button type="button" data-act="go" data-v="search" data-days="today"><span data-t="ft.9459ad">Өнөөдөр хүргэх</span></button><button type="button" data-act="go" data-v="business"><span data-t="ft.ca2ed5">Сарын багц</span></button><button type="button" data-act="go" data-v="business" data-to="calc"><span data-t="ft.ab6ee0">Зардлын тооцоолуур</span></button><button type="button" data-act="go" data-v="login"><span data-t="ft.f0460e">Нэвтрэх</span></button></div>
@@ -1112,7 +1166,7 @@ function notifs(){const r=role(),out=[];const seen=(o)=>o.seen?.[r]||0;
   return out}
 function renderHeader(){
   document.body.dataset.view=ui.v;
-  const fab=$("#aiFab");if(fab)fab.hidden=!AIS||EDIT||["ai","order","checkout","login"].includes(ui.v);
+  const fab=$("#aiFab");if(fab){fab.hidden=!AIS||AI.off||EDIT||["ai","login"].includes(ui.v);if(fab.hidden){if(typeof AIP!=="undefined"&&AIP.open)aiPopClose();const t=$("#aiTease");if(t)t.hidden=true}}
   const navs=[["search",T("nav.search","Үйлчилгээ")],["business",T("nav.biz","Байгууллагад")],...(role()!=="designer"?[["join",T("nav.join","Дизайнер болох")]]:[]),...(AIS?[["ai",`<span class="spark" aria-hidden="true">✦</span>${T("nav.ai","AI туслах")}`]]:[])];
   $("#hnav").innerHTML=navs.map(([v,l])=>`<button type="button" data-act="go" data-v="${v}" ${ui.v===v?'aria-current="page"':""}>${l}</button>`).join("");
   const m=me();
@@ -1610,10 +1664,11 @@ function aiErr(e){const c=e?.code;
 const aiThinking=()=>`<span class="aithink" role="status"><i></i><i></i><i></i> ${AI.live?"":"Бодож байна…"}</span>`;
 const aiStop=()=>`<button class="btn btn-g btn-s" type="button" data-act="aistop">Зогсоох</button>`;
 
-function aiChat(){const msgs=AI.chat.map(m=>`<div class="msg ${m.role==="user"?"me":""}">${m.role==="user"?"":`<span class="aiav" aria-hidden="true">✦</span>`}<div class="bub ${m.role==="user"?"":"md"}">${m.role==="user"?esc(m.content):md(m.content)}</div></div>`).join("");
-  const live=AI.busy==="chat"?`<div class="msg"><span class="aiav" aria-hidden="true">✦</span><div class="bub md" id="aiLive">${AI.live?md(AI.live):aiThinking()}</div></div>`:"";
+function aiMsgs(){return AI.chat.map(m=>`<div class="msg ${m.role==="user"?"me":""}">${m.role==="user"?"":`<span class="aiav" aria-hidden="true">✦</span>`}<div class="bub ${m.role==="user"?"":"md"}">${m.role==="user"?esc(m.content):md(m.content)}</div></div>`).join("")}
+const aiLiveMsg=()=>AI.busy==="chat"?`<div class="msg"><span class="aiav" aria-hidden="true">✦</span><div class="bub md" data-ailive>${AI.live?md(AI.live):aiThinking()}</div></div>`:"";
+function aiChat(){const msgs=aiMsgs(),live=aiLiveMsg();
   return `<div class="card aichat">
-    <div class="chat" id="aiChat" aria-live="polite">${!msgs&&!live?`<div class="aiempty"><span class="aibig" aria-hidden="true">✦</span><h3>${T("ai.chat.h","Дизайны талаар юу ч асуу")}</h3><p class="hint">${T("ai.chat.p","Хэмжээ, өнгө, фонт, постерын текст, дизайнерт өгөх мэдээлэл гээд бүгдэд нь тусална.")}</p></div>`:msgs+live}</div>
+    <div class="chat aichatlist" id="aiChat" aria-live="polite">${!msgs&&!live?`<div class="aiempty"><span class="aibig" aria-hidden="true">✦</span><h3>${T("ai.chat.h","Дизайны талаар юу ч асуу")}</h3><p class="hint">${T("ai.chat.p","Хэмжээ, өнгө, фонт, постерын текст, дизайнерт өгөх мэдээлэл гээд бүгдэд нь тусална.")}</p></div>`:msgs+live}</div>
     ${!AI.chat.length&&!AI.busy?`<div class="chips aichips">${AI_CHIPS.map((q,i)=>`<button class="chip" type="button" data-act="aiq" data-i="${i}">${esc(q)}</button>`).join("")}</div>`:""}
     <form class="chatform" id="aiChatF"><input id="aiQ" autocomplete="off" placeholder="Асуултаа бичнэ үү…" aria-label="Асуулт" ${AI.busy?"disabled":""}>${AI.busy==="chat"?aiStop():`<button class="btn btn-p" type="submit">Илгээх</button>`}</form>
     ${AI.chat.length&&!AI.busy?`<button class="btn btn-l btn-s aiclear" type="button" data-act="aiclear">Шинэ яриа эхлүүлэх</button>`:""}
@@ -1674,7 +1729,7 @@ V.ai=()=>`<section class="hero aihero"><div class="wrap" style="grid-template-co
   <h1>${T("ai.h1","Дизайны тусламж, яг одоо")}</h1>
   <p class="lead">${T("ai.lead","Асуултдаа хариулт авах, бриф бэлдэх, өнгө, фонт сонгох, бэлэн дизайнаа шүүмжлүүлэх. Бэлэн болмогц мэргэжлийн дизайнерт шууд дамжуулна.")}</p></div></div></section>
   <div class="wrap aiwrap" id="aiBody">${aiBody()}</div>`;
-function aiPaint(){if(ui.v!=="ai")return;const b=$("#aiBody");if(!b)return;const f=document.activeElement?.id;b.innerHTML=aiBody();applyEdit();if(f&&f!=="aiQ")document.getElementById(f)?.focus?.();const ch=$("#aiChat");if(ch)ch.scrollTop=ch.scrollHeight}
+function aiPaint(){aiPopPaint();if(ui.v!=="ai")return;const b=$("#aiBody");if(!b)return;const f=document.activeElement?.id;b.innerHTML=aiBody();applyEdit();if(f&&f!=="aiQ")document.getElementById(f)?.focus?.();const ch=$("#aiChat");if(ch)ch.scrollTop=ch.scrollHeight}
 
 /* ---- Cloudflare прокси (Claude-аас гадуур) ---- */
 function aiParseJSON(t){const tryP=x=>{try{return JSON.parse(x)}catch(e){return undefined}};let v=tryP(t.trim());if(v!==undefined)return v;
@@ -1706,6 +1761,33 @@ function aiProxy(url){const E=(code,text)=>Object.assign({code,message:code},tex
   return {proxy:true,run,async json(mode,input,o={}){const {text,truncated}=await run(mode,input,{...o,onText:undefined});if(truncated)throw E("invalid_json",text);return aiParseJSON(text)}}}
 const aiRun=(mode,input,o)=>AIS.proxy?AIS.run(mode,input,o):AIS(input,o);
 const aiJson=(mode,input,o)=>AIS.proxy?AIS.json(mode,input,o):AIS.json(input,o);
+
+/* ---- Буланд гарч ирэх AI цонх ---- */
+const AIP={open:false,t:null};
+const IC_SEND=`<svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path d="M4 12l16-8-6 16-2.5-6.5L4 12z" fill="currentColor"/></svg>`;
+function aiPopHTML(){const empty=!AI.chat.length&&AI.busy!=="chat";
+  const tools=[["brief","Бриф бичүүлэх"],["pal","Өнгө, фонт сонгох"],...(AI.canImg?[["rev","Дизайнаа шүүмжлүүлэх"]]:[])];
+  return `<header class="aipop-h"><span class="aiav lg" aria-hidden="true">✦</span><div class="aipop-t"><b>${T("ai.pop.t","AI туслах")}</b><small><i></i>${T("ai.pop.s","Дизайны асуултад шууд хариулна")}</small></div>
+    <button class="aipop-x" type="button" data-act="aiexpand" aria-label="Томоор нээх" title="Томоор нээх"><svg viewBox="0 0 24 24" width="17" height="17" aria-hidden="true"><path d="M14 4h6v6M10 20H4v-6M20 4l-7 7M4 20l7-7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></button>
+    <button class="aipop-x" type="button" data-act="aipopclose" aria-label="Хаах" title="Хаах"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></svg></button></header>
+  <div class="aipop-b chat aichatlist" id="aiPopChat" aria-live="polite">
+    <div class="msg"><span class="aiav" aria-hidden="true">✦</span><div class="bub">${T("ai.pop.hi","Сайн байна уу! Би TrendlyHUB-ийн AI туслах. Дизайны талаар юу ч асуугаарай.")}</div></div>
+    ${empty?`<div class="aipop-chips">${AI_CHIPS.slice(0,3).map((q,i)=>`<button type="button" data-act="aiq" data-i="${i}">${esc(q)}</button>`).join("")}</div>
+      <div class="aipop-tools"><span>${T("ai.pop.more","Эсвэл:")}</span>${tools.map(([k,l])=>`<button type="button" data-act="aitool" data-k="${k}">${l} →</button>`).join("")}</div>`:aiMsgs()+aiLiveMsg()}
+  </div>
+  ${AI.err?`<p class="aipop-err" role="alert">${esc(AI.err)}</p>`:""}
+  <form class="aipop-f" id="aiPopF"><input id="aiPopQ" autocomplete="off" placeholder="Асуултаа бичнэ үү…" aria-label="Асуулт" ${AI.busy?"disabled":""}>
+    ${AI.busy==="chat"?`<button class="aipop-send stop" type="button" data-act="aistop" aria-label="Зогсоох"><i></i></button>`:`<button class="aipop-send" type="submit" aria-label="Илгээх">${IC_SEND}</button>`}</form>
+  ${AIS?.proxy?`<p class="aipop-note">${T("ai.pop.note","Туршилтын хувилбар · Хувийн мэдээлэл бүү оруулна уу")}</p>`:""}`}
+function aiPopPaint(){if(!AIP.open)return;const el=$("#aiPop");if(!el)return;const f=document.activeElement?.id==="aiPopQ";el.innerHTML=aiPopHTML();applyEdit();
+  const ch=$("#aiPopChat");if(ch)ch.scrollTop=ch.scrollHeight;if(f&&!AI.busy)$("#aiPopQ")?.focus()}
+function aiPopOpen(){if(!AIS||AI.off)return;aiTeaseHide();const el=$("#aiPop");clearTimeout(AIP.t);el.classList.remove("out");AIP.open=true;el.hidden=false;document.body.classList.add("aipop-on");
+  $("#aiFab")?.setAttribute("aria-expanded","true");aiPopPaint();setTimeout(()=>$("#aiPopQ")?.focus(),60)}
+function aiPopClose(){if(!AIP.open)return;AIP.open=false;const el=$("#aiPop");document.body.classList.remove("aipop-on");$("#aiFab")?.setAttribute("aria-expanded","false");
+  if(RM()){el.hidden=true;return}el.classList.add("out");AIP.t=setTimeout(()=>{el.hidden=true;el.classList.remove("out")},200)}
+function aiTeaseHide(){const t=$("#aiTease");if(t)t.hidden=true;try{sessionStorage.setItem("th-ai-tease","1")}catch(e){}}
+function aiTease(){let seen=false;try{seen=!!sessionStorage.getItem("th-ai-tease")}catch(e){}if(seen||!AIS)return;
+  setTimeout(()=>{const t=$("#aiTease"),fab=$("#aiFab");if(!t||AIP.open||EDIT||!fab||fab.hidden)return;t.hidden=false},4500)}
 /* ================= navigation ================= */
 function go(v,p={}){
   if(["client","designer","admin"].includes(v)&&role()!==v){after={v,p};ui.lr=v==="admin"?"client":v;v="login";p={}}
@@ -2036,11 +2118,11 @@ function aiEnd(){AI.busy="";AI.ctl=null;aiPaint()}
 async function aiSendChat(q){q=String(q||"").trim();if(!q||AI.busy||!AIS)return;
   AI.chat.push({role:"user",content:q});const signal=aiStart("chat");
   const turns=[{role:"user",content:AI_CTX()+"\n\nThe conversation with the client starts now."},...AI.chat.slice(-12)];
-  try{const {text}=await aiRun("chat",turns,{cache:false,signal,modelTier:"quick",onText:({text})=>{AI.live=text;const el=$("#aiLive");if(el){el.innerHTML=md(text);const ch=$("#aiChat");if(ch)ch.scrollTop=ch.scrollHeight}}});
+  try{const {text}=await aiRun("chat",turns,{cache:false,signal,modelTier:"quick",onText:({text})=>{AI.live=text;$$("[data-ailive]").forEach(el=>el.innerHTML=md(text));$$(".aichatlist").forEach(c=>c.scrollTop=c.scrollHeight)}});
     AI.chat.push({role:"assistant",content:text})}
   catch(e){if(e?.text)AI.chat.push({role:"assistant",content:e.text});else if(e?.code!=="cancelled"&&AI.chat.at(-1)?.role==="user")AI.chat.pop();
     if(e?.code!=="cancelled")AI.err=aiErr(e)}
-  AI.live="";aiEnd();if(!AI.busy)setTimeout(()=>$("#aiQ")?.focus(),30)}
+  AI.live="";aiEnd();if(!AI.busy)setTimeout(()=>(AIP.open?$("#aiPopQ"):$("#aiQ"))?.focus(),30)}
 async function aiMakeBrief(){const i=AI.bIn;if(!i.what.trim()||AI.busy)return;const signal=aiStart("brief");
   const p=`${AI_CTX()}
 
@@ -2088,6 +2170,12 @@ If you cannot see a design in the image, say so briefly.`;
   aiEnd()}
 
 Object.assign(A,{
+  aipop(){AIP.open?aiPopClose():aiPopOpen()},
+  aipopclose(){aiPopClose();$("#aiFab")?.focus()},
+  aiexpand(){aiPopClose();AI.tab="chat";go("ai")},
+  aitool(el){aiPopClose();AI.tab=el.dataset.k;AI.err="";go("ai")},
+  aiteaseopen(){aiPopOpen()},
+  aiteasex(e){aiTeaseHide()},
   aitab(el){if(AI.busy)AI.ctl?.abort();AI.tab=el.dataset.k;AI.err="";aiPaint()},
   aiq(el){aiSendChat(AI_CHIPS[+el.dataset.i])},
   aistop(){AI.ctl?.abort()},
@@ -2102,6 +2190,7 @@ Object.assign(ON,{
     if(AI.imgUrl)URL.revokeObjectURL(AI.imgUrl);AI.img=f;AI.imgUrl=URL.createObjectURL(f);AI.rev="";AI.rIn=$("#aiRI")?.value||AI.rIn;aiPaint()}
 });
 Object.assign(FORM,{
+  aiPopF(){const i=$("#aiPopQ");const q=i.value;i.value="";aiSendChat(q)},
   aiChatF(){const i=$("#aiQ");const q=i.value;i.value="";aiSendChat(q)},
   aiBriefF(){AI.bIn={what:$("#aiBW").value,biz:$("#aiBB").value,speed:$("#aiBS").value};aiMakeBrief()},
   aiPalF(){AI.pIn=$("#aiPI").value;aiMakePal()},
@@ -2111,7 +2200,8 @@ document.addEventListener("input",e=>{const id=e.target.id;if(id==="aiBW")AI.bIn
 document.addEventListener("change",e=>{if(e.target.id==="aiBS")AI.bIn.speed=e.target.value});
 async function initAI(){try{if(window.claude?.use){AIS=await claude.use("sample");if(AIS){const lim=await AIS.limits?.().catch(()=>null);AI.canImg=!!lim?.images}}}catch(e){AIS=null}
   if(!AIS&&AI_PROXY_URL){AIS=aiProxy(AI_PROXY_URL);AI.canImg=true}
-  AI.ready=true;renderHeader();if(ui.v==="ai")aiPaint()}
+  AI.ready=true;renderHeader();if(ui.v==="ai")aiPaint();aiTease()}
+document.addEventListener("keydown",e=>{if(e.key==="Escape"&&AIP.open&&$("#modal").hidden){aiPopClose();$("#aiFab")?.focus()}});
 initAI();
 </script>
 </body></html>
